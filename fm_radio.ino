@@ -37,6 +37,9 @@ void setup() {
   //Internal resistors for buttons
   digitalWrite(12,HIGH);
   digitalWrite(11,HIGH);
+
+  //debug
+  Serial.begin(9600);
   
   //I2C
   Wire.begin();
@@ -48,7 +51,7 @@ void setup() {
   //init LCD 5110
   display.begin();
   //display.setContrast(100);
-  display.setContrast(50);
+  display.setContrast(55);
   display.clearDisplay();
   }
 
@@ -80,10 +83,11 @@ void loop() {
    display.setTextColor(WHITE, BLACK);
    display.print(signal_level);
    display.print("/15 "); 
-   display.display();
+   
+    display.display();
    delay (500);
-   display.clearDisplay(); 
- 
+   display.clearDisplay();
+   
    //Draw a signal level triangle...
    display.drawLine(80, 30, 80, 45, BLACK);
    display.drawLine(80, 45, 50, 45, BLACK);
@@ -94,6 +98,8 @@ void loop() {
    { 
    display.drawLine(50+2*x, 45, 50+2*x, 45-x, BLACK);
    }
+
+  
  }
  
      //When button pressed, search for new station
@@ -104,20 +110,23 @@ void loop() {
   }
   //If forward button is pressed, go up to next station
   if (btn_forward.isPressed()) {
+    Serial.println("button1pressed");
     last_pressed = current_millis;
     search_mode = 1;
     search_direction = TEA5767_SEARCH_DIR_UP;
     Radio.search_up(buf);
-    delay(1000);
+    delay(500);
   }
   //If backward button is pressed, go down to next station
   if (btn_backward.isPressed()) {
+     Serial.println("button2pressed");
     last_pressed = current_millis;
     search_mode = 1;
     search_direction = TEA5767_SEARCH_DIR_DOWN;
     Radio.search_down(buf);
-    delay(1000);
+    delay(500);
   } 
  
   delay(100);
 }
+
