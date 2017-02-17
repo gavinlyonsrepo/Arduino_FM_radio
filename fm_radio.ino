@@ -40,18 +40,32 @@ void setup() {
 
   //debug
   Serial.begin(9600);
-  
-  //I2C
-  Wire.begin();
-  
-  //init radio module
-  Radio.init();
-  Radio.set_frequency(96.4); //On power on go to station 96.4
 
-  //init LCD 5110
+    //init LCD 5110
   display.begin();
   //display.setContrast(100);
   display.setContrast(55);
+  display.clearDisplay();
+    int16_t i=0;
+    display.drawRect(i, i, display.width()-2*i, display.height()-2*i, BLACK);
+   
+  
+   display.setTextSize(1);
+   display.setTextColor(BLACK);
+   display.setCursor(5,10);
+   display.println("FM Radio.");
+   display.setCursor(5,30);
+   display.println("Gavin Lyons.");  
+   display.display();
+   delay(1500);
+  //I2C
+  Wire.begin();
+  delay(1000);
+  
+  //init radio module
+  Radio.init();
+  Radio.set_frequency(106.106); //On power on go to station 96.4
+
   display.clearDisplay();
   }
 
@@ -65,39 +79,43 @@ void loop() {
    //freq display
    display.setTextSize(2);
    display.setTextColor(BLACK);
-   display.setCursor(0,0);
+   display.setCursor(0,10);
    display.print(display.print(current_freq));
-   display.setCursor(47,15);
-   display.print("MHz");
-   display.setCursor(0,20);
+  // display.setCursor(47,15);
+  // display.print("MHz");
+  // display.setCursor(0,20);
    display.setTextSize(1);
    display.setTextColor(BLACK);
    
    //Strereo or mono ? - display
-   if (stereo) display.print("STEREO"); 
-   else display.print("MONO");
+   //if (stereo) display.print("STEREO"); 
+   // else display.print("MONO");
    
    // display level of FM signal..
-   display.setCursor(0,35);
+   display.setCursor(10,35);
    display.setTextSize(1);
-   display.setTextColor(WHITE, BLACK);
+   display.setTextColor(BLACK);
    display.print(signal_level);
    display.print("/15 "); 
    
+
     display.display();
    delay (500);
    display.clearDisplay();
+
    
    //Draw a signal level triangle...
-   display.drawLine(80, 30, 80, 45, BLACK);
-   display.drawLine(80, 45, 50, 45, BLACK);
-   display.drawLine(50, 45, 80, 30, BLACK);
-   //Fill triangle with signal strength
-   int sl = signal_level;
-   for (int x = 0; x < sl; x++)
+  //display.drawLine(80, 30, 80, 45, BLACK);
+  //display.drawLine(80, 45, 50, 45, BLACK);
+ // display.drawLine(50, 45, 80, 30, BLACK);
+//   Fill triangle with signal strength
+  int sl = signal_level;
+  for (int x = 0; x < sl; x++)
    { 
-   display.drawLine(50+2*x, 45, 50+2*x, 45-x, BLACK);
-   }
+    display.drawLine(50+2*x, 45, 50+2*x, 30, BLACK);
+    //display.drawLine(80, 30, 80, 45, BLACK);
+ // display.drawLine(80, 45, 30, 0, BLACK);
+  }
 
   
  }
@@ -115,7 +133,7 @@ void loop() {
     search_mode = 1;
     search_direction = TEA5767_SEARCH_DIR_UP;
     Radio.search_up(buf);
-    delay(500);
+    delay(1000);
   }
   //If backward button is pressed, go down to next station
   if (btn_backward.isPressed()) {
@@ -124,7 +142,7 @@ void loop() {
     search_mode = 1;
     search_direction = TEA5767_SEARCH_DIR_DOWN;
     Radio.search_down(buf);
-    delay(500);
+    delay(1000);
   } 
  
   delay(100);
