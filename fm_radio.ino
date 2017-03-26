@@ -15,10 +15,12 @@ Adafruit_PCD8544 display = Adafruit_PCD8544(10, 9, 8, 7, 6 );
 TEA5767 Radio; 
 
 //Define the push buttons for serch FM radio forward and back
+//create a Button object at pin 12 11
+// pin 12 11 and Enables the AVR internal pullup resistor
 //Search station up button
-Button btn_forward(11, PULLUP); 
+Button btn_forward(11); 
 //Search station down button
-Button btn_backward(12, PULLUP);
+Button btn_backward(12);
 
 //Variables:
 double old_frequency;
@@ -34,28 +36,23 @@ unsigned long current_millis = millis();
 
 void setup() {
   
-  //Internal resistors for buttons
-  digitalWrite(12,HIGH);
-  digitalWrite(11,HIGH);
-
-  //debug
-  Serial.begin(9600);
+  
 
     //init LCD 5110
-  display.begin();
+   display.begin();
   //display.setContrast(100);
-  display.setContrast(55);
-  display.clearDisplay();
-    int16_t i=0;
-    display.drawRect(i, i, display.width()-2*i, display.height()-2*i, BLACK);
-   
+   display.setContrast(55);
+   display.clearDisplay();
+    
+    display.drawRect(0, 10, 80, 30, BLACK);
+  // display.drawRect(i, i, display.width()-2*i, display.height()-2*i, BLACK);
   
    display.setTextSize(1);
    display.setTextColor(BLACK);
-   display.setCursor(5,10);
-   display.println("FM Radio.");
+   display.setCursor(5,15);
+   display.println("FM Radio");
    display.setCursor(5,30);
-   display.println("Gavin Lyons.");  
+   display.println("Gavin Lyons");  
    display.display();
    delay(1500);
   //I2C
@@ -64,8 +61,17 @@ void setup() {
   
   //init radio module
   Radio.init();
-  Radio.set_frequency(106.106); //On power on go to station 96.4
+  Radio.set_frequency(96.401); //On power on go to station 96.4
 
+ //Internal resistors for buttons
+  digitalWrite(12,HIGH);
+  digitalWrite(11,HIGH);
+  btn_forward.begin();
+  btn_backward.begin();
+  //debug
+  Serial.begin(9600);
+
+  
   display.clearDisplay();
   }
 
@@ -92,7 +98,7 @@ void loop() {
    // else display.print("MONO");
    
    // display level of FM signal..
-   display.setCursor(10,35);
+   display.setCursor(5,35);
    display.setTextSize(1);
    display.setTextColor(BLACK);
    display.print(signal_level);
@@ -109,10 +115,12 @@ void loop() {
   //display.drawLine(80, 45, 50, 45, BLACK);
  // display.drawLine(50, 45, 80, 30, BLACK);
 //   Fill triangle with signal strength
+// draw a signal level box
+  display.drawRect(40, 30, 30, 17, BLACK);
   int sl = signal_level;
   for (int x = 0; x < sl; x++)
    { 
-    display.drawLine(50+2*x, 45, 50+2*x, 30, BLACK);
+    display.drawLine(40+2*x, 45, 40+2*x, 30, BLACK);
     //display.drawLine(80, 30, 80, 45, BLACK);
  // display.drawLine(80, 45, 30, 0, BLACK);
   }
@@ -127,7 +135,7 @@ void loop() {
       }
   }
   //If forward button is pressed, go up to next station
-  if (btn_forward.isPressed()) {
+  if (btn_forward.pressed()) {
     Serial.println("button1pressed");
     last_pressed = current_millis;
     search_mode = 1;
@@ -136,7 +144,7 @@ void loop() {
     delay(1000);
   }
   //If backward button is pressed, go down to next station
-  if (btn_backward.isPressed()) {
+  if (btn_backward.pressed()) {
      Serial.println("button2pressed");
     last_pressed = current_millis;
     search_mode = 1;
