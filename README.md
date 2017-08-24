@@ -1,9 +1,11 @@
 Overview
 --------------------
-* Name : Fm-radio
+* Name : Arduino Fm-radio
 * Title : Fm-radio and speaker
-* Description : Fm radio module using TEA5767 fm module, LM386 module Audio AMP 
-with KA2284 audio level indicator and Nokia 5110 LCD.
+* Description : Arduino Fm radio module using TEA5767 fm module, LM386 module Audio AMP 
+with KA2284 audio level indicator and 0.96" SSD1306 I2C OLED LCD Display Module.
+The unit can be used as a radio or speaker. by placing removebale audio cable between output
+of TEA5767 and inoput of LM386 Audio AMP.
 * Author: Gavin Lyons
 
 Libraries
@@ -11,23 +13,23 @@ Libraries
 * <Wire.h> //I2C comms
 * <TEA5767.h> //fm module
 * <Button.h> //push buttons
-* <Adafruit_GFX.h> //nokia 5110
-* <Adafruit_PCD8544.h> //nokia 5110
+* <SPI.h>
+* <Adafruit_SSD1306.h> //lcd
+* <Adafruit_GFX.h> //lcd
 
-All can be found on Arduino website site and the adafruit website.
+All can be found on Arduino website site and/or the adafruit github.
 
 Parts List
 ------------------------------
-See fritzing diagram in "doc" for assembly instruction.
+See fritzing diagram in "doc" for assembly diagram.
 
  *    PSU or battery 7-12V
  *    Case
  *    Arduino uno  or NANO
  *    TEA5767 Radio module
  *    Antenna
- *    Nokia 5110 LCD display (pcb version)
+ *    SSD1306 I2C 0.96" 128X64 OLED LCD Display Module for Arduino 
  *    2x Push Button
- *    One STDP switch
  *    ICStation DIY Kit 3V-12V LM386 Super MINI Amplifier Board
  *    http://www.icstation.com/icstation-lm386-super-mini-amplifier-board-p-5025.html   
  *    KA2284 Audio Level indicator DIY KIT   *  http://3.bp.blogspot.com/-eO-9YtigXEs/T4lbYAR8BqI/AAAAAAAAAmM/sgNGqV6qTJo/s1600/5-LED-Vu-meter-circuit-using-K A2284.png

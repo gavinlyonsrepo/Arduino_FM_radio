@@ -2,13 +2,41 @@
 #include <Wire.h> //I2C comms
 #include <TEA5767.h> //fm module
 #include <Button.h> //push buttons
-#include <Adafruit_GFX.h> //nokia 5110
-#include <Adafruit_PCD8544.h> //nokia 5110
+#include <SPI.h>
+#include <Adafruit_SSD1306.h> //lcd
+#include <Adafruit_GFX.h> //lcd
+
+//lcd define
+#define LOGO16_GLCD_WIDTH  16 
+static const unsigned char PROGMEM logo16_glcd_bmp[] =
+{ B00000000, B11000000,
+  B00000001, B11000000,
+  B00000001, B11000000,
+  B00000011, B11100000,
+  B11110011, B11100000,
+  B11111110, B11111000,
+  B01111110, B11111111,
+  B00110011, B10011111,
+  B00011111, B11111100,
+  B00001101, B01110000,
+  B00011011, B10100000,
+  B00111111, B11100000,
+  B00111111, B11110000,
+  B01111100, B11110000,
+  B01110000, B01110000,
+  B00000000, B00110000 };
+
+#if (SSD1306_LCDHEIGHT != 32)
+#error("Height incorrect, please fix Adafruit_SSD1306.h!");
+#endif
 
 
-//Class for the LCD display nokia 5110
-//Pinout:(SCLK, DIN, DC, CS, RST)
-Adafruit_PCD8544 display = Adafruit_PCD8544(10, 9, 8, 7, 6 ); 
+#define OLED_RESET 4
+Adafruit_SSD1306 display(OLED_RESET);
+#define NUMFLAKES 10
+#define XPOS 0
+#define YPOS 1
+#define DELTAY 2
 
 //Class for Fm radi module
 //Pinout SLC and SDA - Arduino pins D5 and D4
@@ -36,43 +64,36 @@ unsigned long current_millis = millis();
 
 void setup() {
   
-  
-
-    //init LCD 5110
-   display.begin();
-  //display.setContrast(100);
-   display.setContrast(55);
-   display.clearDisplay();
-    
-    display.drawRect(0, 10, 80, 30, BLACK);
-  // display.drawRect(i, i, display.width()-2*i, display.height()-2*i, BLACK);
-  
-   display.setTextSize(1);
-   display.setTextColor(BLACK);
-   display.setCursor(5,15);
-   display.println("FM Radio");
-   display.setCursor(5,30);
-   display.println("Gavin Lyons");  
-   display.display();
-   delay(1500);
-  //I2C
+   //I2C
   Wire.begin();
   delay(1000);
   
-  //init radio module
+   //init radio module
   Radio.init();
   Radio.set_frequency(96.401); //On power on go to station 96.4
+  
+   //LCD
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
+  display.clearDisplay();
+  display.display();
+  delay (1000);
+
+  DrawTitles();
+  delay (2000);
+
 
  //Internal resistors for buttons
   digitalWrite(12,HIGH);
   digitalWrite(11,HIGH);
   btn_forward.begin();
   btn_backward.begin();
+  
   //debug
   Serial.begin(9600);
 
   
   display.clearDisplay();
+  display.display();
   }
 
 void loop() {
@@ -82,53 +103,20 @@ void loop() {
     stereo = Radio.stereo(buf);
     signal_level = Radio.signal_level(buf);
    
-   //freq display
-   display.setTextSize(2);
-   display.setTextColor(BLACK);
-   display.setCursor(0,10);
-   display.print(display.print(current_freq));
-  // display.setCursor(47,15);
-  // display.print("MHz");
-  // display.setCursor(0,20);
-   display.setTextSize(1);
-   display.setTextColor(BLACK);
-   
-   //Strereo or mono ? - display
-   //if (stereo) display.print("STEREO"); 
-   // else display.print("MONO");
-   
-   // display level of FM signal..
-   display.setCursor(5,35);
-   display.setTextSize(1);
-   display.setTextColor(BLACK);
-   display.print(signal_level);
-   display.print("/15 "); 
-   
-
-    display.display();
+   //The freq  display function
+   DrawFreq();
+   // The Display level of FM signal function
+   DrawSig();
+   display.display();
    delay (500);
    display.clearDisplay();
-
    
-   //Draw a signal level triangle...
-  //display.drawLine(80, 30, 80, 45, BLACK);
-  //display.drawLine(80, 45, 50, 45, BLACK);
- // display.drawLine(50, 45, 80, 30, BLACK);
-//   Fill triangle with signal strength
-// draw a signal level box
-  display.drawRect(40, 30, 30, 17, BLACK);
-  int sl = signal_level;
-  for (int x = 0; x < sl; x++)
-   { 
-    display.drawLine(40+2*x, 45, 40+2*x, 30, BLACK);
-    //display.drawLine(80, 30, 80, 45, BLACK);
- // display.drawLine(80, 45, 30, 0, BLACK);
-  }
-
-  
+   //Stereo or mono ? - display old code from previous display for ref
+   //if (stereo) display.print("STEREO"); 
+   // else display.print("MONO");
  }
  
-     //When button pressed, search for new station
+    //When button pressed, search for new station
   if (search_mode == 1) {
       if (Radio.process_search (buf, search_direction) == 1) {
           search_mode = 0;
@@ -156,3 +144,57 @@ void loop() {
   delay(100);
 }
 
+
+void DrawTitles(void) {
+
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 1);
+  display.println("FM radio");
+
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 17);
+  display.println("G Lyons");
+
+  // draw a white circle, 5 pixel radius
+  display.fillCircle(100, 25, 5, WHITE);
+
+  
+  display.display();
+
+}
+
+void DrawFreq(void) {
+
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 0);
+  display.print(display.print(current_freq));
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(90, 1);
+  display.print("MHz");
+  
+}
+
+
+void DrawSig(void) {
+  //print display strength
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 17);
+  display.print(display.print(signal_level));
+
+  // draw a signal level box (x ,y, w ,h)
+  display.drawRect(45, 20, 65, 10, WHITE);
+  Serial.println(signal_level);
+  int sl = signal_level;
+  Serial.println(sl);
+  for (int x = 0; x < sl; x++)
+     { 
+    //(x1y1 start x2y2 end of line x1, y1, x2, y2) 
+    display.drawLine(45+4*x, 20, 45+4*x, 29, WHITE);
+    
+     }
+}
