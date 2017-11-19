@@ -10,6 +10,10 @@ of TEA5767 and inoput of LM386 Audio AMP.
 
 Libraries
 ------------------------
+
+In the src folder you will find the ino file with source code , it includes a number of 
+libraries.
+ 
 * <Wire.h> //I2C comms
 * <TEA5767.h> //fm module
 * <Button.h> //push buttons
@@ -21,7 +25,10 @@ All can be found on Arduino website site and/or the adafruit github.
 
 Parts List
 ------------------------------
-See fritzing diagram in "doc" for assembly diagram.
+
+See fritzing diagram in "doc" for assembly instruction and schematic. 
+You will need [fritzing](https://en.wikipedia.org/wiki/Fritzing) software to open this.
+
 
  *    PSU or battery 7-12V
  *    Case
@@ -32,7 +39,7 @@ See fritzing diagram in "doc" for assembly diagram.
  *    2x Push Button
  *    ICStation DIY Kit 3V-12V LM386 Super MINI Amplifier Board
  *    http://www.icstation.com/icstation-lm386-super-mini-amplifier-board-p-5025.html   
- *    KA2284 Audio Level indicator DIY KIT   *  http://3.bp.blogspot.com/-eO-9YtigXEs/T4lbYAR8BqI/AAAAAAAAAmM/sgNGqV6qTJo/s1600/5-LED-Vu-meter-circuit-using-K A2284.png
+ *    KA2284 Audio Level indicator DIY KIT   *  http://3.bp.blogspot.com/-eO-9YtigXEs/T4lbYAR8BqI/AAAAAAAAAmM/sgNGqV6qTJo/s1600/5-LED-Vu-meter-circuit-using-KA2284.png
  *   2x Speakers
  
  
