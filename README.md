@@ -5,8 +5,8 @@ Overview
 * Description : Arduino Fm radio module using TEA5767 fm module, LM386 module Audio AMP 
 with KA2284 audio level indicator and 0.96" SSD1306 I2C OLED LCD Display Module.
 The unit can be used as a radio or a speaker, by placing a removeable audio cable between output
-of TEA5767 and input of LM386 Audio AMP. For Radio mode leave cable in, for speaker mode remove and 
-it fom TEA5767 end and connect to Output of Audio device PC phone etc.
+of TEA5767 and input of LM386 Audio AMP. For Radio mode leave cable in, for speaker mode remove the cable 
+ from TEA5767 socket and connect to Output of Audio device: PC, phone etc.
 * Author: Gavin Lyons
 
 Libraries
