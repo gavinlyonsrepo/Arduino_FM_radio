@@ -153,6 +153,8 @@ void loop() {
   delay(100);
 }
 
+// ********************* FUNCTIONS *************************
+
 // Draw the initializations screen
 void DrawTitles(void) {
 
