@@ -1,11 +1,13 @@
 //******************* HEADER ***********************************
 /*
-  Name : LED_Display_arduino
-  Title : Arduino Based LED Display unit.
-  Desc: An Arduino Based LED Display unit with 15 LEDS and 20 lighting modes.
-  A Potentiometer controls mode and push button selects it.
-  Author: Gavin Lyons
-  URL:https://github.com/gavinlyonsrepo/LED_Display_arduino
+ Name : fm_radio
+ Title : Fm-radio and speaker
+ Description : Arduino based FM radio using TEA5767 FM module, LM386 module, Audio amplifier 
+with KA2284 audio level indicator and 0.96" SSD1306 I2C OLED LCD Display Module.
+The unit can also be used as a speaker(see below). Radio stations are selected via two push buttons
+and Audio Volume via a Potentiometer on the LM386 module.
+ Author: Gavin Lyons
+  URL: https://github.com/gavinlyonsrepo/Arduino_FM_radio
 */
 
 //*************************** Libraries *****************
