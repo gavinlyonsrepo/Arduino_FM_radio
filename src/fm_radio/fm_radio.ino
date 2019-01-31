@@ -1,11 +1,21 @@
-//libaries
+//******************* HEADER ***********************************
+/*
+  Name : LED_Display_arduino
+  Title : Arduino Based LED Display unit.
+  Desc: An Arduino Based LED Display unit with 15 LEDS and 20 lighting modes.
+  A Potentiometer controls mode and push button selects it.
+  Author: Gavin Lyons
+  URL:https://github.com/gavinlyonsrepo/LED_Display_arduino
+*/
+
+//*************************** Libraries *****************
 #include <Wire.h> //I2C comms
-#include <TEA5767.h> //fm module
+#include <TEA5767.h> //FM module
 #include <Button.h> //push buttons
-#include <SPI.h>
 #include <Adafruit_SSD1306.h> //lcd
 #include <Adafruit_GFX.h> //lcd
 
+//*************************** GLOBALS ********************
 //lcd define
 #define LOGO16_GLCD_WIDTH  16 
 static const unsigned char PROGMEM logo16_glcd_bmp[] =
@@ -38,11 +48,11 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define YPOS 1
 #define DELTAY 2
 
-//Class for Fm radi module
-//Pinout SLC and SDA - Arduino pins D5 and D4
+//Class for Fm radio module
+//Pinout SCK and SDA - Arduino pins D5 and D4
 TEA5767 Radio; 
 
-//Define the push buttons for serch FM radio forward and back
+//Define the push buttons for search FM radio forward and back
 //create a Button object at pin 12 11
 // pin 12 11 and Enables the AVR internal pullup resistor
 //Search station up button
@@ -51,8 +61,6 @@ Button btn_forward(11);
 Button btn_backward(12);
 
 //Variables:
-double old_frequency;
-double frequency;
 int search_mode = 0;
 int search_direction;
 unsigned long last_pressed;
@@ -62,6 +70,7 @@ int signal_level;
 double current_freq;
 unsigned long current_millis = millis();
 
+//*************************** SETUP ************************
 void setup() {
   
    //I2C
@@ -96,6 +105,7 @@ void setup() {
   display.display();
   }
 
+//******************* MAIN LOOP *****************
 void loop() {
 
  if (Radio.read_status(buf) == 1) {
@@ -111,9 +121,6 @@ void loop() {
    delay (500);
    display.clearDisplay();
    
-   //Stereo or mono ? - display old code from previous display for ref
-   //if (stereo) display.print("STEREO"); 
-   // else display.print("MONO");
  }
  
     //When button pressed, search for new station
@@ -144,7 +151,7 @@ void loop() {
   delay(100);
 }
 
-
+// Draw the initializations screen
 void DrawTitles(void) {
 
   display.setTextSize(2);
@@ -165,6 +172,7 @@ void DrawTitles(void) {
 
 }
 
+//Draw the freq number
 void DrawFreq(void) {
 
   display.setTextSize(2);
@@ -178,7 +186,7 @@ void DrawFreq(void) {
   
 }
 
-
+// Draw the Signal  strength graph
 void DrawSig(void) {
   //print display strength
   display.setTextSize(2);
@@ -198,3 +206,4 @@ void DrawSig(void) {
     
      }
 }
+//*************************** EOF *****************************
