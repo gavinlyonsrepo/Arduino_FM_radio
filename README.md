@@ -48,6 +48,13 @@ J2 and J3 on schematic.
 See eagle diagram and schematic in "doc" subfolder.
 See image folder for images of modules used in "doc" subfolder.
 
+
+Current Consumption:
+
+1. 60mA, low volume.
+2. 80-100mA, Medium volume, all audio lights on Level indicator lighting.
+3. 120mA to 140mA, Maximum volume.
+
 Parts.
 
  *    Arduino UNO or NANO
