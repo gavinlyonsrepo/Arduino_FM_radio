@@ -17,12 +17,11 @@ Libraries
 In the "src" folder you will find the  .ino file with C++ source code , it links to a number of 
 external libraries.
  
-* <TEA5767.h> // FM module 
+* <TEA5767.h> // FM module https://github.com/andykarpov/TEA5767
 * <Button.h> // buttons  1.0.0 https://github.com/madleech/Button 
 * <Adafruit_SSD1306.h> // 1.1.2 OLED
 * <Adafruit_GFX.h> //v 1.2.2 OLED
 
-All can be found on Arduino website site except the last two , these are on the adafruit site.
 
 Software used
 -----------------------------
@@ -33,20 +32,20 @@ Arduino 1.8.5
 Features and Parts List
 ------------------------------
 
-The Radio outputs selected Frequency and signal strength to the OLED a graphic is used to display signal level.
+The Radio outputs selected Frequency and signal strength to the OLED, a graphic is used to display signal level.
 
 In normal mode the two push buttons control freq of radio station. 
 One searches up the FM radio band the other down, for a station.
 
-The SPDT switch controls entry to settings mode where station frequencies can be stored or loaded from the ATmega328's EEPROM. Six station can be stored. On entry there are two options LOAD or SAVE. Selected by Push buttons.
+The SPDT switch controls entry to "settings mode" where station frequencies can be stored or loaded from the ATmega328's EEPROM. Six station can be stored. On entry, there are two options LOAD or SAVE. Selected by Push buttons.
 If SAVE is selected the user can then select the memory location 1-6 in EEPROM and then press push button 2 to save
 current frequency to that location. 
 If LOAD is selected user can browse saved stations and select the one they want.
 
 The LM386 module has a potentiometer which controls volume.
 
-The TEA5667 outputs an audio signal which is fed to the Lm386 Amplifier module which then sends it to the
-speakers The speakers inputs are monitored by the KA2284 5-Level LED Audio Indicator. Higher the volume voltage
+The TEA5667 outputs an audio signal which is fed to the LM386 Amplifier module which then sends it to the
+speakers. The speakers inputs are monitored by the KA2284 5-Level LED Audio Indicator. Higher the volume voltage
 the more LEDs come on.
 
 The unit can be used as a radio or a speaker, by placing a removable audio cable between output
@@ -54,7 +53,7 @@ of TEA5767 and input of LM386 Audio amp. This connection is represented by the A
 J2 and J3 on schematic.
 
 1. For Radio mode leave cable in.
-2. Headphones can  be placed in the socket J2 Audio for alternative Radio mode but no volume control is available.
+2. For Headphones Radio mode can  be placed in the socket J2 Audio.
 3. For speaker mode remove the cable then connect output of Audio device(PC, phone) to input of LM386 module (J3 Audio)
 
 See eagle diagram and schematic in "doc" subfolder.

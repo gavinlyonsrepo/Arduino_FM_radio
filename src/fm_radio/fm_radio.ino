@@ -304,6 +304,9 @@ void DisplaySaveLoadMenu(uint8_t  StationNum, uint8_t mode, double loaded_freq)
 }
 
 // Lets User load freq from EEPROM
+// Returns a uint8_t value
+//2:User has saved a freq
+//1:User has returned the SPST to Vcc or Main postion.
 uint8_t LoadEEPROM()
 {
   uint8_t  StationNum = 1;
