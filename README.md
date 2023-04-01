@@ -1,7 +1,10 @@
+[![Website](https://img.shields.io/badge/Website-Link-blue.svg)](https://gavinlyonsrepo.github.io/)  [![Rss](https://img.shields.io/badge/Subscribe-RSS-yellow.svg)](https://gavinlyonsrepo.github.io//feed.xml)  [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/whitelight976)
+
+
 Overview
 --------------------
-* Name : fm_radio
-* Title : Fm-radio and speaker
+* Name : Arduino_FM_radio
+* Title : Fm-radio project for Arduino based eco system.
 
 * Description : Arduino based FM radio using TEA5767 FM module, LM386 Audio amplifier module
 with KA2284 audio level indicator and 0.96" SSD1306 I2C OLED LCD Display Module.
@@ -21,13 +24,6 @@ external libraries.
 * <Button.h> // buttons  1.0.0 https://github.com/madleech/Button 
 * <Adafruit_SSD1306.h> // 1.1.2 OLED
 * <Adafruit_GFX.h> //v 1.2.2 OLED
-
-
-Software used
------------------------------
-Eagle 9.1.3
-
-Arduino 1.8.5
 
 Features and Parts List
 ------------------------------
@@ -86,8 +82,3 @@ Modules.
  Schematic
  -----------------------
  ![ScreenShotradio](https://github.com/gavinlyonsrepo/Arduino_FM_radio/blob/master/doc/eagle/fm_radio.png)
- 
- Copyright
--------------------------------
-Copyright (C) 2016 G Lyons This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, see license.md for more details
-
